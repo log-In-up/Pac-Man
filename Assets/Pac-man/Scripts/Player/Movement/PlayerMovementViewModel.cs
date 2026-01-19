@@ -63,7 +63,7 @@ namespace Pacman
             }
             else
             {
-                _playerRigidbody.velocity = Vector3.zero;
+                _playerRigidbody.linearVelocity = Vector3.zero;
             }
         }
     }
