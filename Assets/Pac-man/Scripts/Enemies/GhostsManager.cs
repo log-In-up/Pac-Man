@@ -3,12 +3,22 @@ using UnityEngine;
 
 namespace Pacman
 {
-    public class GhostsManager : MonoBehaviour
+    public class GhostsManager
     {
-        [SerializeField] private GameObject Player;
-        [SerializeField] private List<Ghost> Ghosts;
+        public delegate void OnPlayerTouchNotifier();
 
-        private void Start()
+        public event OnPlayerTouchNotifier PlayerTouchNotify;
+
+        private readonly GameObject Player;
+        private readonly List<Ghost> Ghosts;
+
+        public GhostsManager(GameObject Player, List<Ghost> Ghosts)
+        {
+            this.Player = Player;
+            this.Ghosts = Ghosts;
+        }
+
+        public void Start()
         {
             foreach (Ghost ghost in Ghosts)
             {
@@ -17,7 +27,7 @@ namespace Pacman
             }
         }
 
-        private void OnDisable()
+        public void Stop()
         {
             foreach (Ghost ghost in Ghosts)
             {
@@ -27,6 +37,7 @@ namespace Pacman
 
         private void OnPlayerTouch(GameObject Player)
         {
+            PlayerTouchNotify?.Invoke();
         }
     }
 }

@@ -1,30 +1,43 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pacman
 {
-    public class PointsManager : MonoBehaviour
+    public class PointsManager
     {
-        [SerializeField] private PointsView PointsView;
-        [SerializeField] private GameObject Player;
+        public delegate void OnAllCollectablesNotifier();
+
+        public event OnAllCollectablesNotifier AllCollectablesTaken;
+
+        private readonly PointsView PointsView;
 
         private PointsModel PointsModel;
         private PointsViewModel PointsViewModel;
 
-        private void Awake()
+        public PointsManager(List<GameObject> Points, PointsView PointsView, GameObject Player)
         {
-            PointsModel = new PointsModel(Player);
+            this.PointsView = PointsView;
+
+            PointsModel = new PointsModel(Player, Points);
             PointsViewModel = new PointsViewModel(PointsModel);
+
+            this.PointsView.Initialize(PointsViewModel);
         }
 
-        private void Start()
+        public void Start()
         {
-            PointsView.Initialize(PointsViewModel);
-
+            PointsViewModel.Notify += OnAllCollectiblesNotifier;
             PointsView.Launch();
         }
 
-        private void OnDisable()
+        private void OnAllCollectiblesNotifier()
         {
+            AllCollectablesTaken?.Invoke();
+        }
+
+        public void Stop()
+        {
+            PointsViewModel.Notify -= OnAllCollectiblesNotifier;
             PointsView.Stop();
         }
     }

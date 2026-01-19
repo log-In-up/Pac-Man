@@ -8,6 +8,10 @@ namespace Pacman
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public delegate void OnAllCollectablesNotifier();
+
+        public event OnAllCollectablesNotifier Notify;
+
         public uint GetCurrentPoints => Model.CurrentPoints;
 
         private readonly PointsModel Model;
@@ -34,6 +38,11 @@ namespace Pacman
             OnPropertyChanged(nameof(GetCurrentPoints));
 
             collectable.SetActive(false);
+
+            if (Model.TotalPoints == Model.CurrentPoints)
+            {
+                Notify?.Invoke();
+            }
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
