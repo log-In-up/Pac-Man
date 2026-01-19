@@ -45,15 +45,26 @@ namespace Pacman
                 z = _model.MovementSpeed * Time.fixedDeltaTime * Input.GetAxis(VERTICAL_AXIS);
             }
 
-            Vector3 position = _playerRigidbody.position + new Vector3(x, y, z);
-            float distance = Vector3.Distance(_playerRigidbody.position, position);
-
-            RaycastHit hit;
-            if (Physics.SphereCast(_playerRigidbody.position, _playerSphereCollider.radius, position.normalized, out hit, distance, _model.SelfLayer))
+            if (x != 0.0f | z != 0.0f)
             {
-                return;
+                Vector3 position = _playerRigidbody.position + new Vector3(x, y, z);
+                float distance = Vector3.Distance(_playerRigidbody.position, position);
+
+                RaycastHit hit;
+                if (Physics.SphereCast(_playerRigidbody.position, _playerSphereCollider.radius, position.normalized, out hit, distance, _model.SelfLayer))
+                {
+                    return;
+                }
+
+                Vector3 direction = new Vector3(x, y, z);
+
+                _model.Player.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+                _playerRigidbody.MovePosition(_playerRigidbody.position + direction);
             }
-            _playerRigidbody.MovePosition(_playerRigidbody.position + new Vector3(x, y, z));
+            else
+            {
+                _playerRigidbody.velocity = Vector3.zero;
+            }
         }
     }
 }

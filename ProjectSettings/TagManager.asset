@@ -35,7 +35,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Enemy
   - Collectible
   - Player
   m_SortingLayers:
