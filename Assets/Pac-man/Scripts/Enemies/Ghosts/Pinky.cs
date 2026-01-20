@@ -18,6 +18,11 @@ namespace Pacman
 
         private void Update()
         {
+            if (Player == null)
+            {
+                return;
+            }
+
             Vector3 Position = Player.transform.position;
 
             if (Agent.hasPath && !IsAheadPositionIsReached)

@@ -4,6 +4,11 @@ namespace Pacman
     {
         private void Update()
         {
+            if (Player == null)
+            {
+                return;
+            }
+
             Agent.SetDestination(Player.transform.position);
         }
     }

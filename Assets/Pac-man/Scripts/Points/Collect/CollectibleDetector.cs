@@ -4,14 +4,9 @@ namespace Pacman
 {
     public class CollectibleDetector : MonoBehaviour
     {
-        public OnCollectEvent OnTouchCollectable;
+        public OnCollectEvent OnTouchCollectable = new OnCollectEvent();
 
         private const string COLLECTABLE = "Collectable";
-
-        private void Awake()
-        {
-            OnTouchCollectable = new OnCollectEvent();
-        }
 
         private void OnCollisionEnter(Collision collision)
         {

@@ -41,7 +41,7 @@ namespace Pacman
             State.Update();
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             PointsManager.Stop();
             GhostsManager.Stop();

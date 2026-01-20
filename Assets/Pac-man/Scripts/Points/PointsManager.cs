@@ -27,6 +27,7 @@ namespace Pacman
         public void Start()
         {
             PointsViewModel.Notify += OnAllCollectiblesNotifier;
+            PointsViewModel.Start();
             PointsView.Launch();
         }
 
@@ -38,6 +39,7 @@ namespace Pacman
         public void Stop()
         {
             PointsViewModel.Notify -= OnAllCollectiblesNotifier;
+            PointsViewModel.Stop();
             PointsView.Stop();
         }
     }

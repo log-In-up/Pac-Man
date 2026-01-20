@@ -12,7 +12,7 @@ namespace Pacman
 
         protected internal NavMeshAgent Agent;
         protected internal GameObject Player;
-        private OnPlayerTouch OnPlayerTouch;
+        private OnPlayerTouch OnPlayerTouch = new OnPlayerTouch();
         private SphereCollider Collider;
 
         public OnPlayerTouch GetOnPlayerTouch
@@ -27,8 +27,6 @@ namespace Pacman
         {
             Agent = GetComponent<NavMeshAgent>();
             Collider = GetComponent<SphereCollider>();
-
-            OnPlayerTouch = new OnPlayerTouch();
         }
 
         public virtual void Initialize(GameObject player)
@@ -38,6 +36,11 @@ namespace Pacman
 
         protected internal bool PlayerDetected()
         {
+            if (Player == null)
+            {
+                return false;
+            }
+
             Vector3 offset = new Vector3(0.0f, 0.5f, 0.0f);
             Vector3 start = Agent.transform.position + offset;
             Vector3 target = Player.transform.position + offset;

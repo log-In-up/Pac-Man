@@ -22,11 +22,14 @@ namespace Pacman
             this.Model = Model;
 
             PlayerCollectibleDetector = Model.Player.GetComponent<CollectibleDetector>();
+        }
 
+        public void Start()
+        {
             PlayerCollectibleDetector.OnTouchCollectable.AddListener(OnTouchCollectable);
         }
 
-        ~PointsViewModel()
+        public void Stop()
         {
             PlayerCollectibleDetector.OnTouchCollectable.RemoveListener(OnTouchCollectable);
         }
